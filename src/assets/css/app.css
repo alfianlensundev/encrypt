@@ -1,0 +1,88 @@
+.bg-custom-blue-dark{
+    background-color: #151d41;
+}
+
+.shadow-cs-lg-blue{
+    box-shadow: 0 10px 15px -3px #8070da1a, 0 4px 6px -2px #8070da1a;
+}
+
+.shadow-neu-input-inset{
+    box-shadow: inset 5px 5px 10px #f5f5f5, 
+            inset -5px -5px 10px #ffffff;
+}
+
+.shadow-neu-input{
+    box-shadow:  5px 5px 10px #f5f5f5, 
+             -5px -5px 10px #ffffff;
+}
+
+.neu-btn{
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    box-shadow:  10px 10px 20px #e8e8e8, 
+             -10px -10px 20px #ffffff;
+}
+
+.bg-grd-blue{
+    background: #396afc;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2948ff, #396afc);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2948ff, #396afc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grd-orange{
+    background: #FFB75E;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ED8F03, #FFB75E);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ED8F03, #FFB75E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+}
+
+.bg-grd-blue-hover{
+    background: #396afc;  /* fallback for old browsers */
+    transition: .2s ease;
+    background: -webkit-linear-gradient(to right, #2948ff, #396afc);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2948ff, #396afc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-grd-blue-hover:hover{
+    background: #396afc;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2949ffaf, #396afcbd);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2949ffce , #396afcb2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.background-primary{
+    background-color: #4e73df;
+    background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+    background-size: cover;
+}
+
+.background-primary-n{
+    background-color: #4e73df;
+}
+
+#tsparticles {
+    height: 100vh;
+}
+
+.rounded-tr-xl{
+    border-top-right-radius: 30px;
+}
+
+.shadow-lg-cs{
+    -webkit-box-shadow: 48px -9px 7px -47px rgba(163,164,168,1);
+    -moz-box-shadow: 48px -9px 7px -47px rgba(163,164,168,1);
+    box-shadow: 48px -9px 7px -47px rgba(163,164,168,1);
+}
+
+.transition{
+    transition: .2s ease;
+}
+
+.shadow-cs-header{
+    box-shadow: 12px 2px 21px -9px rgba(163,164,168,1);
+}
+
+.popup-content{
+    border: none !important;
+}
+
+.h-fit-content{
+    height: fit-content;
+}
