@@ -123,7 +123,7 @@ export default class SignUp extends Component{
         return (
             <div className="w-screen h-screen bg-grd-blue flex justify-center items-center px-2 overflow-hidden relative">
                 
-                <ParticlesBackground />
+                {/* <ParticlesBackground /> */}
                 <div className="w-full absolute top-0 z-20 p-4">
                     <div className="text-white font-light text-xs font-light">
                         {moment(this.state.date).format('DD MMMM YYYY')}

@@ -23,19 +23,19 @@ export default class WelcomePage extends Component{
                     <div className="flex-1 px-2">
                         <div className="bg-grd-orange shadow-lg w-full py-4 flex flex-col rounded-lg px-6 text-white relative overflow-hidden">
                             <div className="w-full">
-                                <ParticlesBackground />
+                                {/* <ParticlesBackground /> */}
                             </div>
                             <div className="w-full text-lg font-bold">
-                                Hello, {this.state.userdata.fullname}
+                                Welcome
                             </div>
                             <div className="w-full text-sm mt-2 font-light">
-                                Selamat data di aplikasi enkripsi dan dekripsi file
+                                Welcome to the encryption and decryption app
                             </div>
                             
                         </div>
                         <div className="w-full shadow-lg rounded-lg px-4 mt-4 bg-indigo-500">
                             <div className="w-full font-medium text-sm py-4 text-white">
-                                Riwayat Enkripsi
+                                Encryption History
                             </div>
                             
                             <div className="py-4 flex flex-wrap">

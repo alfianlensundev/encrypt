@@ -11,7 +11,7 @@ export default function CardFolder({...props}){
                 </div>
                 <div className="flex-1">
                     <div className="w-full font-medium text-sm ">
-                        Daftar Mahasiswa 
+                        Student List 
                     </div>
                     <div className="w-full font-light text-xs mt-2">
                         Ukuran File: 15MB

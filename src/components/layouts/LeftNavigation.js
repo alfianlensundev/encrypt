@@ -20,9 +20,9 @@ export default class LeftNavigation extends Component{
         return (
             <div className="xl:flex lg:flex md:hidden sm:hidden hidden bg-grd-blue rounded-tr-xl relative overflow-hidden shadow-xl">
                 <div className="absolute z-10">
-                    <ParticlesBackground 
+                    {/* <ParticlesBackground 
                         followParent
-                    />
+                    /> */}
                 </div>
                 <div className="w-16 h-full py-4 z-20">
                     <div className=" h-full">
@@ -77,7 +77,7 @@ export default class LeftNavigation extends Component{
                             >   
                                 <BsFillShieldLockFill />
                                 <div className="pl-4 font-medium text-sm">
-                                    Enkripsi
+                                    Encryption
                                 </div>
                             </div>
                             
@@ -94,7 +94,7 @@ export default class LeftNavigation extends Component{
                             >   
                                 <FaUnlock />
                                 <div className="pl-4 font-medium text-sm">
-                                    Dekripsi
+                                    Decryption
                                 </div>
                             </div>
                         </Ripple>
@@ -111,7 +111,7 @@ export default class LeftNavigation extends Component{
                                 >   
                                     <FaUser />
                                     <div className="pl-4 font-medium text-sm">
-                                        Validasi Pengguna
+                                        User Validation
                                     </div>
                                 </div>
                             </Ripple>
@@ -128,7 +128,7 @@ export default class LeftNavigation extends Component{
                             >   
                                 <BsFillFolderFill />
                                 <div className="pl-4 font-medium text-sm">
-                                    File
+                                    Files
                                 </div>
                             </div>
                         </Ripple>

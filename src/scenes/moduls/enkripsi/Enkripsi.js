@@ -28,7 +28,7 @@ export default class Enkripsi extends Component {
                     <div className="w-5/6 px-2">
                         <div className="bg-grd-orange shadow-lg w-full py-4 flex flex-col rounded-lg px-6 text-white relative overflow-hidden">
                             <div className="w-full">
-                                <ParticlesBackground />
+                                {/* <ParticlesBackground /> */}
                             </div>
                             <div className="w-full text-lg font-bold">
                                 Modul Enkripsi

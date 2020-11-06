@@ -23,7 +23,7 @@ export default class File extends Component {
                     <div className="w-full px-2 flex flex-col  pb-4">
                         <div className="bg-grd-orange shadow-lg w-full py-4 flex flex-col rounded-lg px-6 text-white relative overflow-hidden">
                             <div className="w-full">
-                                <ParticlesBackground />
+                                {/* <ParticlesBackground /> */}
                             </div>
                             <div className="w-full text-lg font-bold">
                                 Modul File
