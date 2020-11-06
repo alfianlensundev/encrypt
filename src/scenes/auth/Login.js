@@ -125,10 +125,10 @@ export default class Login extends Component{
                     <div className="w-full xl:w-1/4 lg:w-2/4 md:w-2/4 sm:w-full py-10 px-6 items-center relative">
                         <div className="w-full items-center">
                             <div className="text-xl font-bold text-white text-center text-shadow-lg">
-                                MASUK
+                                SIGN IN
                             </div>
                             <div className="text-sm font-light text-white text-center text-shadow-lg mt-2">
-                                Selamat datang di aplikasi enkripsi dan dekripsi
+                                Welcome to the encryption and decryption application
                             </div>
                         </div>
                         <div className="w-full mt-6 flex">
@@ -176,7 +176,7 @@ export default class Login extends Component{
                                     </div>
                                     : 
                                     <div className="flex-1 justify-center text-blue-700 text-sm font-medium items-center text-center flex">
-                                        Masuk
+                                        Sign In
                                     </div>
                                 }
                             </Ripple>
@@ -186,7 +186,7 @@ export default class Login extends Component{
                                 className="w-1/2 h-8 ml-2 rounded-lg bg-white cursor-pointer hover:bg-blue-100"
                             >
                                 <div className="w-full h-full justify-center text-blue-700 text-sm shadow-xl font-bold items-center text-center flex">
-                                    Mendaftar
+                                    Register
                                 </div>
                             </Ripple>
                         </div>

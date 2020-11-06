@@ -1,0 +1,3 @@
+- klik kanan 
+- klik git bash here
+- di terminal "yarn start"
