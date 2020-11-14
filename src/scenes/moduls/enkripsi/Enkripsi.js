@@ -7,6 +7,7 @@ import Loader from 'react-loader-spinner'
 import { extToIcon } from '../../../helpers/jsxHelpers'
 import { BsUpload } from 'react-icons/bs'
 import { IoMdCloudUpload } from 'react-icons/io'
+import TextInput from '../../../components/textinputs/TextInput'
 
 
 export default class Enkripsi extends Component {
@@ -45,10 +46,23 @@ export default class Enkripsi extends Component {
                                 </div>
                                 : null
                             }
+                            <div className="w-full xl:w-1/3 ">
+                                <div className="w-full font-medium text-sm">
+                                    Title
+                                </div>
+                                <TextInput
+                                    // icon={<BiLockAlt size={16}/>}
+                                    onChange={(e) => {
+                                        this.setState({
+                                            password: e.target.value
+                                        })
+                                    }}
+                                    value={this.state.password}
+                                />
+                            </div>
                             {this.state.file === null ? 
                                 <FileUpload 
                                     onChange={(acceptedFiles) => {
-                                        
                                         this.setState({
                                             file: acceptedFiles[0],
                                             extension:acceptedFiles[0].name.substr(acceptedFiles[0].name.lastIndexOf('.') + 1)
