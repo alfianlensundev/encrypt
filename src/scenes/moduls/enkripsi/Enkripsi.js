@@ -138,7 +138,7 @@ export default class Enkripsi extends Component {
                                     }}
                                 />
                                 : <div className="w-full items-center flex-col mb-4 flex justify-center pt-2">
-                                    {extToIcon('xlsx', 50)}
+                                    {extToIcon(this.state.extension, 50)}
                                     <div className="font-light text-xs mt-4">
                                         01293.xlsx
                                     </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import Ripple from 'react-ripples'
-import {AiFillStar, AiFillFileWord, AiOutlineCloudDownload} from 'react-icons/ai'
+import { AiFillFileWord, AiOutlineCloudDownload} from 'react-icons/ai'
 import { BiTrash } from 'react-icons/bi'
 
 export default function CardFolder({subject, filesize,ondelete,ondownload,...props}){
@@ -22,7 +22,7 @@ export default function CardFolder({subject, filesize,ondelete,ondownload,...pro
                     {ondownload && 
                         <Ripple
                             onClick={ondownload}
-                            className="w-10 h-10 hover:bg-blue-400 hover:text-white transition text-blue-400 justify-center items-center rounded-lg"
+                            className="w-10 h-10 mr-2 hover:bg-blue-400 hover:text-white transition text-blue-400 justify-center items-center rounded-lg"
                         >
                             <AiOutlineCloudDownload size={20}/>
                         </Ripple>         
