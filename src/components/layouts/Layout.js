@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import LeftNavigation from './LeftNavigation'
 import SearchInput from '../textinputs/SearchInput'
 import {IoIosPerson} from 'react-icons/io'
-import {MdWidgets} from 'react-icons/md'
+import {MdClose, MdWidgets} from 'react-icons/md'
 import Ripple from 'react-ripples'
 import Popup from 'reactjs-popup';
 import { BiLogOutCircle } from 'react-icons/bi'
@@ -11,6 +11,41 @@ import { HiUserCircle } from 'react-icons/hi'
 export default class Layout extends Component{
     constructor(props){
         super(props)
+        this.state = {
+            toastType: 'default',
+            showToast: false,
+            toastMessage: ''
+        }
+    }
+
+    toastType = () => {
+        switch (this.state.toastType) {
+            case 'success':
+                return 'bg-green-500 text-white'
+                break;
+            case 'danger':
+                return 'bg-red-500 text-white'
+                break;
+        
+            default:
+                return 'bg-teal-200'
+                break;
+        }
+    }
+
+    showToast = (toastType = 'default' ,toastMessage = '',timeout = 10000) => {
+        clearTimeout(this.timeout)
+        this.setState({
+            toastMessage,
+            toastType,
+            showToast: true
+        })
+
+        this.timeout = setTimeout(() => {
+            this.setState({
+                showToast: false
+            })
+        }, timeout);
     }
     render(){
         return (
@@ -93,6 +128,23 @@ export default class Layout extends Component{
                         {this.props.children}
                     </div>
                 </div>
+                {this.state.showToast && 
+                    <div className={`px-4 h-12 mx-2 my-2  font-light text-sm shadow-lg rounded-lg flex items-center absolute left-0 bottom-0 ${this.toastType()}`} style={{
+                        width: 'fit-content'
+                    }}>
+                        {this.state.toastMessage}
+                        <Ripple     
+                            onClick={() => {
+                                clearTimeout(this.timeout)
+                                this.setState({
+                                    showToast: false
+                                })
+                            }}
+                            className="cursor-pointer z-20 w-10 h-10 flex items-center justify-center">
+                            <MdClose size={20}/>
+                        </Ripple>
+                    </div>
+                }
             </div>
         )
     }

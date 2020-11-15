@@ -14,11 +14,11 @@ export default function FileUpload({onChange}){
                 isDragActive ?
                 <div className="w-full py-10 font-light text-sm text-indigo-400 flex items-center justify-center flex-col">
                     <FaCloudUploadAlt size={40}/>
-                    <p className="mt-4">Taruh file di sini untuk mulai mengunggah</p>
+                    <p className="mt-4">Put your file here to upload</p>
                 </div> :
                 <div className="w-full py-10 font-light text-sm text-indigo-400 flex items-center justify-center flex-col">
                     <RiDragDropLine size={40}/>
-                    <p className="mt-4">Tarik dan lepaskan file anda disini, atau klik untuk memilih file</p>
+                    <p className="mt-4">Drag and Drop your file here, or click to select</p>
                 </div>
                 // 
             }

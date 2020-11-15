@@ -6,22 +6,90 @@ import Ripple from 'react-ripples'
 import Loader from 'react-loader-spinner'
 import { extToIcon } from '../../../helpers/jsxHelpers'
 import { BsUpload } from 'react-icons/bs'
+import {deleteFile, downloadFile, encryptAndSaveFile, getAllFile, uploadFile} from '../../../services/ServiceFiles'
 import { IoMdCloudUpload } from 'react-icons/io'
 import TextInput from '../../../components/textinputs/TextInput'
+import CardFolder from '../../../components/cards/CardFolder'
+import { bytesToSize } from '../../../helpers/GeneralHelpers'
+import ModalConfirm from '../../../components/modals/ModalConfirm'
+import Axios from 'axios'
 
 
 export default class Enkripsi extends Component {
     constructor(props){
         super(props)
-        this.state = {
+        this.initialState = {
+            subject: '',
             file: null,
+            selectedFile: null,
+            success: null,
             loaderUpload: false,
-            extension: null
+            extension: null,
+        }
+
+        this.state = {
+            listfile: [],
+            ...this.initialState
         }
     }
+
+    componentDidMount(){
+        this.getAllFile()
+    }
+
+    getAllFile = async () => {
+        try { 
+            const {data: {data: listfile} } = await getAllFile()
+            this.setState({
+                listfile
+            })
+        } catch(err){
+            this.layout.showToast('danger', 'Cant Connect To Server')
+        }
+    }
+
+    doUploadFile = async () => {
+        try {
+            const {_id: userId} = JSON.parse(localStorage.getItem('user_data'))
+            this.setState({
+                loaderUpload: true
+            })
+            const formData = new FormData()
+            formData.append('file', this.state.file)
+            formData.append('userId', userId)
+            const {data: {data: fileDetail}} = await uploadFile(formData)
+            const {data: {status}} = await encryptAndSaveFile({
+                fileDetail,
+                userId: userId,
+                subject: this.state.subject
+            })
+
+            this.layout.showToast('success','data is successfully saved', 4000)
+            this.setState(this.initialState)
+            this.getAllFile()
+        } catch(err){
+            this.layout.showToast('danger','failed to save data', 4000)
+            this.setState({
+                loaderUpload: false
+            })
+        }
+    }
+
+    deleteFile = async () => {
+        try {
+            await deleteFile(this.state.selectedFile._id)
+            this.layout.showToast('success','data is successfully deleted', 4000)
+            this.setState(this.initialState)
+            this.getAllFile()
+        } catch(err){
+            this.layout.showToast('danger','failed to save data', 4000)
+        }
+    }
+
     render(){
         return (
             <Layout
+                ref={ref => this.layout = ref}
                 {...this.props}
                 activePage={1}
             >
@@ -46,18 +114,18 @@ export default class Enkripsi extends Component {
                                 </div>
                                 : null
                             }
-                            <div className="w-full xl:w-1/3 ">
-                                <div className="w-full font-medium text-sm">
-                                    Title
+                            <div className="w-full xl:w-1/3 lg:w-1/3 md:w-2/3 sm:w-full mb-4">
+                                <div className="w-full mb-2 font-medium text-gray-800 pl-2 text-sm ">
+                                    Subject
                                 </div>
                                 <TextInput
-                                    // icon={<BiLockAlt size={16}/>}
+                                    placeholder={'What is this file ?'}
                                     onChange={(e) => {
                                         this.setState({
-                                            password: e.target.value
+                                            subject: e.target.value
                                         })
                                     }}
-                                    value={this.state.password}
+                                    value={this.state.subject}
                                 />
                             </div>
                             {this.state.file === null ? 
@@ -75,6 +143,7 @@ export default class Enkripsi extends Component {
                                         01293.xlsx
                                     </div>
                                     <Ripple
+                                        onClick={this.doUploadFile}
                                         className={'px-4 py-2 mt-4 transition hover:bg-blue-400 hover:text-white text-white bg-blue-500 flex items-center justify-center cursor-pointer rounded-full'}
                                     >
                                         <div className="font-medium text-sm">
@@ -87,14 +156,44 @@ export default class Enkripsi extends Component {
                                 </div>
                             }
                             
-                        </div>
-                    </div>
-                    <div className="w-2/6 h-full overflow-y-scroll overflow-x-hidden bg-white shadow-lg rounded">
-                        <div className="w-full px-2 py-2">
                             
                         </div>
                     </div>
+                    <div className="w-2/6 h-full overflow-y-scroll overflow-x-hidden bg-white shadow-lg rounded">
+                        {this.state.listfile.map((item, idx) => {
+                            return(
+                                <div 
+                                    key={idx}
+                                    className="w-full px-2 py-2 border-b mt-2">
+                                    <CardFolder 
+                                        ondownload={async () => {
+                                            const {data} = await downloadFile(item._id, 1)
+                                            console.log(data)
+                                            const element = document.createElement("a");
+                                            const file = new Blob([data], {type: 'text/plain'});
+                                            element.href = URL.createObjectURL(file);
+                                            element.download = item.file_name+'.txt';
+                                            document.body.appendChild(element); // Required for this to work in FireFox
+                                            element.click();
+                                        }}
+                                        ondelete={() => {
+                                            this.setState({
+                                                selectedFile: item
+                                            })
+                                            this.modalConfirm.showModal('Are you sure you want to delete this data?')
+                                        }}
+                                        subject={item.subject}
+                                        filesize={bytesToSize(item.file_size)}
+                                    />
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
+                <ModalConfirm 
+                    onConfirm={this.deleteFile}
+                    ref={ref => this.modalConfirm = ref}
+                />
             </Layout>
         )
     }
