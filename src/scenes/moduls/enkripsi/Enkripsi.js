@@ -13,6 +13,7 @@ import CardFolder from '../../../components/cards/CardFolder'
 import { bytesToSize } from '../../../helpers/GeneralHelpers'
 import ModalConfirm from '../../../components/modals/ModalConfirm'
 import Axios from 'axios'
+import { API_BASE_URL } from '../../../constants/config'
 
 
 export default class Enkripsi extends Component {
@@ -169,13 +170,7 @@ export default class Enkripsi extends Component {
                                     <CardFolder 
                                         enctime={item.time_encryption.$numberDecimal}
                                         ondownload={async () => {
-                                            const {data} = await downloadFile(item._id, 1)
-                                            const element = document.createElement("a");
-                                            const file = new Blob([data], {type: 'text/plain'});
-                                            element.href = URL.createObjectURL(file);
-                                            element.download = item.file_name+'.txt';
-                                            document.body.appendChild(element); // Required for this to work in FireFox
-                                            element.click();
+                                            window.location = `${API_BASE_URL}/files/download/${item._id}/1`
                                         }}
                                         ondelete={() => {
                                             this.setState({
