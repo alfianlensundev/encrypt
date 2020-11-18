@@ -60,6 +60,9 @@ export default class Layout extends Component{
                             case 1:
                                 this.props.history.push('/enkripsi')
                                 break;
+                            case 2:
+                                this.props.history.push('/dekripsi')
+                                break;
                             case 3:
                                 this.props.history.push('/master/users')
                                 break;

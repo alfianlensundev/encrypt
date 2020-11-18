@@ -94,16 +94,16 @@ export default class Enkripsi extends Component {
                 activePage={1}
             >
                 <div className="w-full h-full px-2 flex">
-                    <div className="w-5/6 px-2">
+                    <div className="flex-1 px-2">
                         <div className="bg-grd-orange shadow-lg w-full py-4 flex flex-col rounded-lg px-6 text-white relative overflow-hidden">
                             <div className="w-full">
                                 {/* <ParticlesBackground /> */}
                             </div>
                             <div className="w-full text-lg font-bold">
-                                Modul Enkripsi
+                                Encrypt
                             </div>
                             <div className="w-full text-sm mt-2 font-light">
-                                Silahkan upload lengkapi data berikut untuk mulai melakukan enkripsi
+                                Please upload, complete the following data to start encryption
                             </div>
                             
                         </div>
@@ -140,7 +140,7 @@ export default class Enkripsi extends Component {
                                 : <div className="w-full items-center flex-col mb-4 flex justify-center pt-2">
                                     {extToIcon(this.state.extension, 50)}
                                     <div className="font-light text-xs mt-4">
-                                        01293.xlsx
+                                        {this.state.file.name}
                                     </div>
                                     <Ripple
                                         onClick={this.doUploadFile}
@@ -161,14 +161,15 @@ export default class Enkripsi extends Component {
                     </div>
                     <div className="w-2/6 h-full overflow-y-scroll overflow-x-hidden bg-white shadow-lg rounded">
                         {this.state.listfile.map((item, idx) => {
+                            console.log(item)
                             return(
                                 <div 
                                     key={idx}
                                     className="w-full px-2 py-2 border-b mt-2">
                                     <CardFolder 
+                                        enctime={item.time_encryption.$numberDecimal}
                                         ondownload={async () => {
                                             const {data} = await downloadFile(item._id, 1)
-                                            console.log(data)
                                             const element = document.createElement("a");
                                             const file = new Blob([data], {type: 'text/plain'});
                                             element.href = URL.createObjectURL(file);

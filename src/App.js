@@ -11,6 +11,7 @@ import Enkripsi from './scenes/moduls/enkripsi/Enkripsi';
 import SignUp from './scenes/auth/SignUp';
 import RequestUser from './scenes/moduls/masteruser/RequestUser';
 import File from './scenes/moduls/file/File';
+import Dekripsi from './scenes/moduls/dekripsi/Dekripsi';
 
 
 export default class App extends Component{
@@ -40,6 +41,11 @@ export default class App extends Component{
 			{
 				path: '/enkripsi',
 				component: Enkripsi,
+				auth: true
+			},
+			{
+				path: '/dekripsi',
+				component: Dekripsi,
 				auth: true
 			},
 			{

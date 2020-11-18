@@ -10,7 +10,6 @@ export const extToIcon = (ext, size = 30) => {
         case 'docx':
             return <AiFillFileWord size={size} className="text-blue-500"/>
             break;
-    
         default:
             return null
             break;
