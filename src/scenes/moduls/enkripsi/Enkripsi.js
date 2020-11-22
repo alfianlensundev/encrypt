@@ -40,7 +40,8 @@ export default class Enkripsi extends Component {
 
     getAllFile = async () => {
         try { 
-            const {data: {data: listfile} } = await getAllFile()
+            const {_id: userId} = JSON.parse(localStorage.getItem('user_data'))
+            const {data: {data: listfile} } = await getAllFile(userId, 1)
             this.setState({
                 listfile
             })

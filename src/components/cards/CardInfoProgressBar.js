@@ -3,7 +3,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 
-export default function CardInfoProgressBar({percentage = 0,...props}){
+export default function CardInfoProgressBar({percentage = 0,itemcount = 0,ext = '',...props}){
     return (
         <div className="w-full flex py-4 px-4 bg-indigo-100 hover:shadow-lg cursor-pointer rounded-lg">
             <div className="h-10 w-10 flex items-center justify-center">
@@ -18,7 +18,7 @@ export default function CardInfoProgressBar({percentage = 0,...props}){
                         strokeLinecap: 'butt',
                     
                         // Text size
-                        textSize: '35px',
+                        textSize: '20px',
                     
                         // How long animation takes to go from one percentage to another, in seconds
                         pathTransitionDuration: 0.5,
@@ -36,10 +36,10 @@ export default function CardInfoProgressBar({percentage = 0,...props}){
             </div>
             <div className="flex-1 text-indigo-700 px-4 items-center flex flex-col">
                 <div className="w-full font-medium text-sm">
-                    PDF 
+                    {ext} 
                 </div>
                 <div className="w-full font-light text-sm">
-                    Total : 20 File 
+                    Total : {itemcount} File 
                 </div>
             </div>
         </div>

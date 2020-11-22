@@ -5,7 +5,7 @@ import FileUpload from '../../../components/fileinput/FileUpload'
 import Loader from 'react-loader-spinner'
 import Ripple from 'react-ripples'
 import { BsFillFolderFill } from 'react-icons/bs'
-export default class File extends Component {
+export default class FileDetail extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -27,6 +27,9 @@ export default class File extends Component {
                             </div>
                             <div className="w-full text-lg font-bold">
                                 Files
+                            </div>
+                            <div className="w-full mt-2 text-xs font-medium">
+                                20 September 2020
                             </div>
                         </div>
                         <div className="flex-1 shadow-lg rounded-lg px-4 mt-4 bg-white py-2 flex flex-wrap relative">

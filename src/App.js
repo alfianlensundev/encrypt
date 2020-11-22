@@ -12,6 +12,7 @@ import SignUp from './scenes/auth/SignUp';
 import RequestUser from './scenes/moduls/masteruser/RequestUser';
 import File from './scenes/moduls/file/File';
 import Dekripsi from './scenes/moduls/dekripsi/Dekripsi';
+import FileDetail from './scenes/moduls/file/FileDetail';
 
 
 export default class App extends Component{
@@ -51,6 +52,11 @@ export default class App extends Component{
 			{
 				path: '/files',
 				component: File,
+				auth: true
+			},
+			{
+				path: '/files/detail',
+				component: FileDetail,
 				auth: true
 			}
 		]

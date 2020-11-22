@@ -3,7 +3,7 @@ import Ripple from 'react-ripples'
 import { AiFillFileWord, AiOutlineCloudDownload} from 'react-icons/ai'
 import { BiTrash } from 'react-icons/bi'
 
-export default function CardFolder({subject, filesize,ondelete,ondownload,enctime,...props}){
+export default function CardFolder({subject, filesize,ondelete,ondownload,enctime,dectime,encrypt_status = 1,...props}){
     return (
         <div className="w-full text-indigo-800 ">
             <div className="w-full relative flex bg-white px-2 py-4 rounded-lg hover:shadow-lg transition cursor-pointer">
@@ -19,7 +19,7 @@ export default function CardFolder({subject, filesize,ondelete,ondownload,enctim
                     </div>
                     {enctime &&
                         <div className="w-full font-light text-xs">
-                            Encryption Time: {enctime}
+                            {encrypt_status === 1 ? 'Encryption' : 'Decryption'} Time: {encrypt_status === 1 ? enctime: dectime} second
                         </div>
                     }
                 </div>

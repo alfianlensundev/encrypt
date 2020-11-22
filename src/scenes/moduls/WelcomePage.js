@@ -5,13 +5,49 @@ import {ImFolderDownload} from 'react-icons/im'
 import CardFolder from '../../components/cards/CardFolder'
 import CardInfoProgressBar from '../../components/cards/CardInfoProgressBar'
 import ParticlesBackground from '../../components/background/ParticlesBackground'
+import { dashboardExt, dashboardData } from '../../services/ServiceFiles'
+import { bytesToSize } from '../../helpers/GeneralHelpers'
 export default class WelcomePage extends Component{
     constructor(props){
         super(props)
         this.state = {
-            userdata: JSON.parse(localStorage.getItem('user_data'))
+            userdata: JSON.parse(localStorage.getItem('user_data')),
+            listDashboardExt: [],
+            listDashboard: {
+                listDec: [],
+                listEnc: [],
+            }
         }
-        console.log(this.state.userdata)
+    }
+
+    componentDidMount(){
+        this.getDashboardExt()
+        this.getDashboard()
+    }
+
+    getDashboard = async () => {
+        try {
+            const {_id: userId} = JSON.parse(localStorage.getItem('user_data'))
+            const {data: {data}} = await dashboardData(userId)
+            this.setState({
+                listDashboard:data
+            })
+            console.log(data)
+        } catch(err){
+            console.log(err)
+        }
+    }
+
+    getDashboardExt = async () => {
+        try {
+            const {_id: userId} = JSON.parse(localStorage.getItem('user_data'))
+            const {data: {data}} = await dashboardExt(userId)
+            this.setState({
+                listDashboardExt:data
+            })
+        } catch(err){
+            console.log(err)
+        }
     }
     render(){
         return(
@@ -39,12 +75,19 @@ export default class WelcomePage extends Component{
                             </div>
                             
                             <div className="py-4 flex flex-wrap">
-                                <div className="xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2 mt-2 xl:w-1/3 lg:w-1/3 md:w-full sm:w-full w-full px-2">
-                                    <CardFolder />
-                                </div>
-                                <div className="xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2 mt-2 xl:w-1/3 lg:w-1/3 md:w-full sm:w-full w-full px-2">
-                                    <CardFolder />
-                                </div>
+                                {this.state.listDashboard.listEnc.map(item => {
+                                    return (
+                                        <div className="xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2 mt-2 xl:w-1/2 lg:w-1/2 md:w-full sm:w-full w-full px-2">
+                                            <CardFolder 
+                                                encrypt_status={item.encrypt_status}
+                                                enctime={item.time_encryption.$numberDecimal}
+                                                dectime={item.time_decryption.$numberDecimal}
+                                                subject={item.subject}
+                                                filesize={bytesToSize(item.file_size)}
+                                            />
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
                         <div className="w-full shadow-lg rounded-lg px-4 mt-4 bg-indigo-500">
@@ -53,21 +96,32 @@ export default class WelcomePage extends Component{
                             </div>
                             
                             <div className="py-4 flex flex-wrap">
-                                <div className="xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2 mt-2 xl:w-1/3 lg:w-1/3 md:w-full sm:w-full w-full px-2">
-                                    <CardFolder />
-                                </div>
-                                <div className="xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2 mt-2 xl:w-1/3 lg:w-1/3 md:w-full sm:w-full w-full px-2">
-                                    <CardFolder />
-                                </div>
+                                {this.state.listDashboard.listDec.map(item => {
+                                    return (
+                                        <div className="xl:mt-0 lg:mt-0 md:mt-2 sm:mt-2 mt-2 xl:w-1/2 lg:w-1/2 md:w-full sm:w-full w-full px-2">
+                                            <CardFolder 
+                                                encrypt_status={item.encrypt_status}
+                                                enctime={item.time_encryption.$numberDecimal}
+                                                dectime={item.time_decryption.$numberDecimal}
+                                                subject={item.subject}
+                                                filesize={bytesToSize(item.file_size)}
+                                            />
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
                     <div className="w-2/6 xl:flex lg:flex md:hidden sm:hidden hidden flex-col h-full overflow-y-scroll overflow-x-hidden bg-white shadow-lg rounded">
-                        <div className="w-full px-2 py-2">
-                            <CardInfoProgressBar 
-                                
-                            />
-                        </div>
+                        {this.state.listDashboardExt.map(item => {
+                            return <div className="w-full px-2 py-2">
+                                 <CardInfoProgressBar 
+                                    percentage={item.persent}
+                                    itemcount={item.total}
+                                    ext={item.ext}
+                                />
+                            </div>
+                        })}
                     </div>
                 </div>
             </Layout>
