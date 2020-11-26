@@ -4,15 +4,43 @@ import ParticlesBackground from '../../../components/background/ParticlesBackgro
 import FileUpload from '../../../components/fileinput/FileUpload'
 import Loader from 'react-loader-spinner'
 import Ripple from 'react-ripples'
+import DataTable from 'react-data-table-component';
 import { BsFillFolderFill } from 'react-icons/bs'
+import moment from 'moment'
+import { getFilesByDate } from '../../../services/ServiceFiles'
+import { bytesToSize } from '../../../helpers/GeneralHelpers'
 export default class FileDetail extends Component {
     constructor(props){
         super(props)
         this.state = {
             file: null,
+            listfile: [],
             loaderUpload: false
         }
     }
+
+    componentDidMount(){
+        this.getFile()
+    }
+
+    getFile = async () => {
+        try {
+            const {_id: userId} = JSON.parse(localStorage.getItem('user_data'))
+            const {data:{data}} = await getFilesByDate(userId, this.props.history.location.state.tgl)
+            this.setState({
+                listfile: data.map((item, key) => ({
+                    no: key+1,
+                    time_dec: item.time_decryption.$numberDecimal,
+                    time_enc: item.time_encryption.$numberDecimal,
+                    ...item
+                }))
+            })
+        } catch(err){
+            console.log(err)
+        }
+    }
+
+
     render(){
         return (
             <Layout
@@ -29,19 +57,49 @@ export default class FileDetail extends Component {
                                 Files
                             </div>
                             <div className="w-full mt-2 text-xs font-medium">
-                                20 September 2020
+                                {moment(this.props.history.location.state.tgl).format('DD MMMM YYYY')}
                             </div>
                         </div>
-                        <div className="flex-1 shadow-lg rounded-lg px-4 mt-4 bg-white py-2 flex flex-wrap relative">
-                            <Ripple 
-                                color={'rgba(255,255,255,.4)'}
-                                className="w-1/6 h-fit-content mt-4 py-4 rounded-lg flex cursor-pointer hover:bg-gray-200 flex-col items-center py-2 px-2 justify-center">
-                                <BsFillFolderFill size={50} color={'#396afc'}/>
-                                <div className="font-medium text-gray-800 mt-4 text-xs">
-                                    20 September 2020
-                                </div>
-                            </Ripple>
-                            
+                        <div className="flex-1 shadow-lg rounded-lg px-4 mt-4 bg-white py-2 relative">
+                            <DataTable
+                                className={'text-sm'}
+                                title="Daftar File"
+                                columns={[
+                                    {
+                                        name: 'No',
+                                        selector: 'no',
+                                        sortable: true,
+                                    },
+                                    {
+                                        name: 'File Name',
+                                        selector: 'file_name',
+                                        sortable: true,
+                                    },
+                                    {
+                                        format: (row) => bytesToSize(row.file_size),
+                                        name: 'File Size',
+                                        selector: 'file_size',
+                                        sortable: true,
+                                    },
+                                    {
+                                        name: 'Encryption Time',
+                                        selector: 'time_enc',
+                                        sortable: true,
+                                    },
+                                    {
+                                        name: 'Decryption Time',
+                                        selector: 'time_dec',
+                                        sortable: true,
+                                    },
+                                    {
+                                        cell: row => <div className={`px-2 py-2 text-xs text-white rounded ${row.encrypt_status === 1 ? 'bg-blue-500 hover:bg-blue-400' : 'bg-red-500 hover:bg-red-400'}`} data-tag="allowRowEvents">{row.encrypt_status === 1 ? 'Encrypted' : 'Decrypted'}</div>,
+                                        name: 'Status',
+                                        selector: 'status',
+                                        sortable: true,
+                                    }
+                                ]}
+                                data={this.state.listfile}
+                            />
                         </div>
                     </div>
                 </div>

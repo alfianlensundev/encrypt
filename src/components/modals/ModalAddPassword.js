@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import { BiLockAlt } from 'react-icons/bi'
 import Ripple from 'react-ripples'
 import Popup from 'reactjs-popup'
-import { doLogin, doValidateFile } from '../../services/ServiceAuth'
+import { doLogin } from '../../services/ServiceAuth'
 import TextInput from '../textinputs/TextInput'
+import PasswordStrengthBar from 'react-password-strength-bar';
+ 
 
-export default class ModalAuth extends Component{
+export default class ModalAddPassword extends Component{
     constructor(props){
         super(props)
         this.state = {
             showModal: false,
             password: '',
+            passwordScore: 0,
             invalidMessage: ''
         }
     }
@@ -36,33 +39,32 @@ export default class ModalAuth extends Component{
             })
             if (this.state.password.length === 0){
                 this.setState({
-                    invalidMessage: 'Masukan password terlebih dahulu!'
-                })   
+                    invalidMessage: 'Enter your password'
+                })
                 return false
             }
-            const {extenddata = {}} = this.props
-            
-            const {data: {code, data, message}} = await doValidateFile({
-                ...extenddata,
-                password: this.state.password
-            })
-            
-            if (code !== 200){
+
+            if (this.state.passwordScore < 3){
                 this.setState({
-                    invalidMessage: message
+                    invalidMessage: 'Your password is too weak, please update your password'
                 })
                 return false
             }
             
-            this.props.onSuccess()
+            this.props.onSubmit(this.state.password)
         } catch(err){
-            
+            // console.log(err)
         }
     }
 
     render(){
         return(
             <Popup
+                onClose={() => this.setState({
+                    showModal: false
+                }, () => {
+                    this.props.onCancel()
+                })}
                 open={this.state.showModal}
                 modal
                 
@@ -76,12 +78,13 @@ export default class ModalAuth extends Component{
                         }
                         <div className="flex-1 px-4 py-4 ">
                             <div className="w-full">
-                                Password Validation
+                                Password
                             </div>
                             <div className="w-full mt-2 text-xs font-light">
-                                Masukan password anda
+                                Enter a password to encrypt this file
                             </div>
                             <div className="w-full py-2 mt-6">
+                                
                                 <TextInput 
                                     icon={<BiLockAlt size={16}/>}
                                     secureText
@@ -94,12 +97,23 @@ export default class ModalAuth extends Component{
                                     }}
                                     value={this.state.password}
                                 />
+                                {this.state.password.length > 0 &&
+                                    <PasswordStrengthBar 
+                                        onChangeScore={(score) => {
+                                            this.setState({
+                                                passwordScore: score
+                                            })
+                                        }}
+                                        password={this.state.password} />
+                                }
                             </div>
                             <div className="w-full flex pt-4">
                                 <Ripple
                                     onClick={() => this.setState({
                                         showModal: false
-                                    }, () => this.props.onFailed())}
+                                    }, () => {
+                                        this.props.onCancel()
+                                    })}
                                     className="cursor-pointer h-10 flex-1 rounded-lg mr-2 flex justify-center items-center text-red-500 font-bold text-sm"
                                 >
                                     Cancel

@@ -10,10 +10,11 @@ import {deleteFile, downloadFile, encryptAndSaveFile, getAllFile, uploadFile} fr
 import { IoMdCloudUpload } from 'react-icons/io'
 import TextInput from '../../../components/textinputs/TextInput'
 import CardFolder from '../../../components/cards/CardFolder'
-import { bytesToSize } from '../../../helpers/GeneralHelpers'
+import { bytesToSize, downloadAs } from '../../../helpers/GeneralHelpers'
 import ModalConfirm from '../../../components/modals/ModalConfirm'
 import Axios from 'axios'
 import { API_BASE_URL } from '../../../constants/config'
+import ModalAddPassword from '../../../components/modals/ModalAddPassword'
 
 
 export default class Enkripsi extends Component {
@@ -26,6 +27,7 @@ export default class Enkripsi extends Component {
             success: null,
             loaderUpload: false,
             extension: null,
+            password: ''
         }
 
         this.state = {
@@ -62,6 +64,7 @@ export default class Enkripsi extends Component {
             const {data: {data: fileDetail}} = await uploadFile(formData)
             const {data: {status}} = await encryptAndSaveFile({
                 fileDetail,
+                password: this.state.password,
                 userId: userId,
                 subject: this.state.subject
             })
@@ -136,6 +139,8 @@ export default class Enkripsi extends Component {
                                         this.setState({
                                             file: acceptedFiles[0],
                                             extension:acceptedFiles[0].name.substr(acceptedFiles[0].name.lastIndexOf('.') + 1)
+                                        }, () => {
+                                            this.modalAddPassword.showModal()
                                         })
                                     }}
                                 />
@@ -171,7 +176,7 @@ export default class Enkripsi extends Component {
                                     <CardFolder 
                                         enctime={item.time_encryption.$numberDecimal}
                                         ondownload={async () => {
-                                            window.location = `${API_BASE_URL}/files/download/${item._id}/1`
+                                            downloadAs(`${API_BASE_URL}/files/download/${item._id}/1`, item.subject)
                                         }}
                                         ondelete={() => {
                                             this.setState({
@@ -187,6 +192,20 @@ export default class Enkripsi extends Component {
                         })}
                     </div>
                 </div>
+                <ModalAddPassword 
+                    onSubmit={(password) => {
+                        this.setState({
+                            password
+                        })
+                        this.modalAddPassword.hideModal()
+                    }}
+                    onCancel={() => {
+                        if (this.state.password.length === 0){
+                            this.setState(this.initialState)
+                        }
+                    }}
+                    ref={ref => this.modalAddPassword = ref}
+                />
                 <ModalConfirm 
                     onConfirm={this.deleteFile}
                     ref={ref => this.modalConfirm = ref}

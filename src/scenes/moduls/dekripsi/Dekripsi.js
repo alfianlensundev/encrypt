@@ -10,7 +10,7 @@ import {deleteFile, downloadFile, encryptAndSaveFile, getAllFile, uploadFile, de
 import { IoMdCloudUpload } from 'react-icons/io'
 import TextInput from '../../../components/textinputs/TextInput'
 import CardFolder from '../../../components/cards/CardFolder'
-import { bytesToSize } from '../../../helpers/GeneralHelpers'
+import { bytesToSize, downloadAs } from '../../../helpers/GeneralHelpers'
 import ModalConfirm from '../../../components/modals/ModalConfirm'
 import Axios from 'axios'
 import { API_BASE_URL } from '../../../constants/config'
@@ -96,7 +96,7 @@ export default class Dekripsi extends Component {
     }
 
     onFailed = () => {
-        alert('fail;')
+        this.setState(this.initialState)
     }
 
     deleteFile = async () => {
@@ -180,8 +180,9 @@ export default class Dekripsi extends Component {
                                         encrypt_status={item.encrypt_status}
                                         enctime={item.time_encryption.$numberDecimal}
                                         dectime={item.time_decryption.$numberDecimal}
+                                        ext={item.file_extension}
                                         ondownload={async () => {
-                                            window.location = `${API_BASE_URL}/files/download/${item._id}/0`
+                                            downloadAs(`${API_BASE_URL}/files/download/${item._id}/0`, item.file_name)
                                         }}
                                         ondelete={() => {
                                             this.setState({
@@ -202,6 +203,7 @@ export default class Dekripsi extends Component {
                     ref={ref => this.modalConfirm = ref}
                 />
                 <ModalAuth 
+                    extenddata={this.state.dataDecrypt}
                     onSuccess={this.onSuccess}
                     onFailed={this.onFailed}
                     ref={ref => this.modalAuth = ref}

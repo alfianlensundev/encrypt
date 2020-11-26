@@ -40,3 +40,11 @@ export async function deleteFile(fileId){
 export async function downloadFile(fileId, encrypted = 1){
     return await GET(`${API_BASE_URL}/files/download/${fileId}/${encrypted}`)
 }
+
+export async function getFolder(iduser){
+    return await GET(`${API_BASE_URL}/files/folder/${iduser}`)
+}
+
+export async function getFilesByDate(iduser, tgl){
+    return await GET(`${API_BASE_URL}/files/detail/${iduser}/${tgl}`);
+}

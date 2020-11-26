@@ -16,3 +16,7 @@ export async function getAllUsers(){
 export async function doValidateUser(data){
     return await POST(`${API_BASE_URL}/auth/users/validate`, data)
 }
+
+export async function doValidateFile(data){
+    return await POST(`${API_BASE_URL}/files/decrypt/validate`, data)   
+}

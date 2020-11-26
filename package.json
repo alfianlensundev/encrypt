@@ -14,11 +14,13 @@
     "react": "^16.13.1",
     "react-animated-modal": "^1.1.1",
     "react-circular-progressbar": "^2.0.3",
+    "react-data-table-component": "^6.11.6",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.2.0",
     "react-icons": "^3.11.0",
     "react-loader-spinner": "^3.1.14",
     "react-particles-js": "^3.3.0",
+    "react-password-strength-bar": "^0.3.2",
     "react-ripples": "^2.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
@@ -26,6 +28,7 @@
     "react-tooltip": "^4.2.10",
     "react-top-loading-bar": "^2.0.1",
     "reactjs-popup": "^2.0.4",
+    "styled-components": "^5.2.1",
     "sweetalert2-react": "^0.8.3"
   },
   "scripts": {
