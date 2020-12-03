@@ -182,7 +182,8 @@ export default class Dekripsi extends Component {
                                         dectime={item.time_decryption.$numberDecimal}
                                         ext={item.file_extension}
                                         ondownload={async () => {
-                                            downloadAs(`${API_BASE_URL}/files/download/${item._id}/0`, item.file_name)
+                                            let fn = item.subject.trim().length > 0 ? item.subject : item.filename
+                                            downloadAs(`${API_BASE_URL}/files/download/${item._id}/0`, fn)
                                         }}
                                         ondelete={() => {
                                             this.setState({
