@@ -176,7 +176,8 @@ export default class Enkripsi extends Component {
                                     <CardFolder 
                                         enctime={item.time_encryption.$numberDecimal}
                                         ondownload={async () => {
-                                            downloadAs(`${API_BASE_URL}/files/download/${item._id}/1`, item.subject)
+                                            let fn = item.subject.trim().length > 0 ? item.subject : item.filename
+                                            downloadAs(`${API_BASE_URL}/files/download/${item._id}/1`, fn)
                                         }}
                                         ondelete={() => {
                                             this.setState({
